@@ -28,7 +28,7 @@ regd_users.post("/login", (req,res) => {
 
  if (authenticatedUser(username,password)) {
     let accessToken = jwt.sign({
-        data: password
+        data: username
       }, 'access', { expiresIn: 60 * 60 });
     
     req.session.authorization = {
@@ -41,10 +41,42 @@ regd_users.post("/login", (req,res) => {
 });
 
 // Add a book review
-regd_users.put("/auth/review/:isbn", (req, res) => {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+regd_users.put("/customer/auth/review/:isbn", (req, res) => {
+  const isbn = req.params.isbn;
+  const uname = req.user.data;
+  const text = req.body.review;
+  
+  // Find the book
+  let keys = Object.keys(books);
+  
+  for (let i = keys[0]; i <= keys[keys.length - 1]; i++) {
+    if (Object.hasOwn(books[i], 'isbn13') && books[i].isbn13 == isbn) {
+      books[i].reviews[uname] = text;
+      res.send("Review saved");
+      break;
+    }
+  }
+  
 });
+
+regd_users.delete("/customer/auth/review/:isbn", (req, res) => {
+  const isbn = req.params.isbn;
+  const uname = req.user.data;
+  const text = req.body.review;
+  
+  // Find the book
+  let keys = Object.keys(books);
+  
+  for (let i = keys[0]; i <= keys[keys.length - 1]; i++) {
+    if (Object.hasOwn(books[i], 'isbn13') && books[i].isbn13 == isbn) {
+      delete books[i].reviews[uname];
+      res.send("Review removed");
+      break;
+    }
+  }
+  
+});
+
 
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
