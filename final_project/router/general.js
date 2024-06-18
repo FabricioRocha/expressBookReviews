@@ -71,11 +71,13 @@ public_users.get('/title/:title',function (req, res) {
 public_users.get('/review/:isbn',function (req, res) {
   const isbn = req.params.isbn;
   let keys = Object.keys(books);
-  let found = [];
   
   for (let i = keys[0]; i <= keys[keys.length - 1]; i++) {
-    if (books[i].isbn13 == isbn) res.send(books[i].reviews);
+    if (Object.hasOwn(books[i], 'isbn13') && books[i].isbn13 == isbn) {
+        return res.status(200).json(books[i].reviews);
+    }
   }
+  res.send({});
   
 });
 
