@@ -33,7 +33,7 @@ public_users.get('/isbn/:isbn',function (req, res) {
   let keys = Object.keys(books);
   let found = [];
   
-  for (let i = keys[0]; i < keys.length; i++) {
+  for (let i = keys[0]; i <= keys[keys.length - 1]; i++) {
     if (Object.hasOwn(books[i], 'isbn13') && books[i].isbn13 == isbn) found.push(books[i]);
   }
   
@@ -46,8 +46,8 @@ public_users.get('/author/:author',function (req, res) {
   let keys = Object.keys(books);
   let found = [];
   
-  for (let i = 0; i < keys.length; i++) {
-    if (JSON.parse(books[i]).author.includes(author)) found.push(books[i]);
+  for (let i = keys[0]; i <= keys[keys.length - 1]; i++) {
+    if (books[i].author.includes(author)) found.push(books[i]);
   }
   
   return res.status(200).json(found);
@@ -55,12 +55,12 @@ public_users.get('/author/:author',function (req, res) {
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
-  const author = req.params.title;
+  const title = req.params.title;
   let keys = Object.keys(books);
   let found = [];
   
-  for (let i = 0; i < keys.length; i++) {
-    if (JSON.parse(books[i]).title.includes(title)) found.push(books[i]);
+  for (let i = keys[0]; i <= keys[keys.length - 1]; i++) {
+    if (books[i].title.includes(title)) found.push(books[i]);
   }
   
   return res.status(200).json(found);
@@ -72,8 +72,8 @@ public_users.get('/review/:isbn',function (req, res) {
   let keys = Object.keys(books);
   let found = [];
   
-  for (let i = 0; i < keys.length; i++) {
-    if (JSON.parse(books[i]).isbn13 == isbn) res.send(books[i].reviews);
+  for (let i = keys[0]; i <= keys[keys.length - 1]; i++) {
+    if (books[i].isbn13 == isbn) res.send(books[i].reviews);
   }
   
 });
