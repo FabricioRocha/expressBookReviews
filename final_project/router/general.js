@@ -6,8 +6,19 @@ const public_users = express.Router();
 
 
 public_users.post("/register", (req,res) => {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  const uname = req.body.username;
+  const upwd = req.body.password;
+  if (uname && upwd) {
+    if (isValid(uname)) {
+      users.push({username: uname, password: upwd});
+    } else {
+      res.status(400).json({"message": `User $uname already registered`});
+    }
+
+  } else {
+    res.status(400).json({"message": "Missing username and/or password"});
+  }
+  
 });
 
 // Get the book list available in the shop
@@ -31,7 +42,6 @@ public_users.get('/isbn/:isbn',function (req, res) {
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
-  //Write your code here
   const author = req.params.author;
   let keys = Object.keys(books);
   let found = [];
