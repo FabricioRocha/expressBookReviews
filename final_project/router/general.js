@@ -11,6 +11,7 @@ public_users.post("/register", (req,res) => {
   if (uname && upwd) {
     if (isValid(uname)) {
       users.push({username: uname, password: upwd});
+      res.status(200).json({message: "User created"});
     } else {
       res.status(400).json({message: `User $uname already registered`});
     }
