@@ -12,11 +12,11 @@ public_users.post("/register", (req,res) => {
     if (isValid(uname)) {
       users.push({username: uname, password: upwd});
     } else {
-      res.status(400).json({"message": `User $uname already registered`});
+      res.status(400).json({message: `User $uname already registered`});
     }
 
   } else {
-    res.status(400).json({"message": "Missing username and/or password"});
+    res.status(400).json({message: "Missing username and/or password"});
   }
   
 });
@@ -34,7 +34,7 @@ public_users.get('/isbn/:isbn',function (req, res) {
   let found = [];
   
   for (let i = 0; i < keys.length; i++) {
-    if (JSON.parse(books[i]).isbn13 == isbn) found.push(books[i];
+    if (JSON.parse(books[i]).isbn13 == isbn) found.push(books[i]);
   }
   
   return res.status(200).json(found);
@@ -47,7 +47,7 @@ public_users.get('/author/:author',function (req, res) {
   let found = [];
   
   for (let i = 0; i < keys.length; i++) {
-    if (JSON.parse(books[i]).author.includes(author)) found.push(books[i];
+    if (JSON.parse(books[i]).author.includes(author)) found.push(books[i]);
   }
   
   return res.status(200).json(found);
@@ -60,7 +60,7 @@ public_users.get('/title/:title',function (req, res) {
   let found = [];
   
   for (let i = 0; i < keys.length; i++) {
-    if (JSON.parse(books[i]).title.includes(title)) found.push(books[i];
+    if (JSON.parse(books[i]).title.includes(title)) found.push(books[i]);
   }
   
   return res.status(200).json(found);
