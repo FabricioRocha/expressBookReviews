@@ -33,8 +33,8 @@ public_users.get('/isbn/:isbn',function (req, res) {
   let keys = Object.keys(books);
   let found = [];
   
-  for (let i = 0; i < keys.length; i++) {
-    if (JSON.parse(books[i]).isbn13 == isbn) found.push(books[i]);
+  for (let i = keys[0]; i < keys.length; i++) {
+    if (Object.hasOwn(books[i], 'isbn13') && books[i].isbn13 == isbn) found.push(books[i]);
   }
   
   return res.status(200).json(found);
