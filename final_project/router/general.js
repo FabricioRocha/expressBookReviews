@@ -4,6 +4,37 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
+const axios = require('axios');
+function clientGetBooks() {
+  const req = axios.get('http://localhost:5000/');
+  req.then( (resp) => {console.log (resp.data);})
+      .catch((err) => {console.log(`FAILED: ${err.message}`)} );
+}
+
+function clientGetByISBN (isbn) {
+  if (!isbn) return;
+  const req = axios.get(`http://localhost:5000/isbn/${isbn}`);
+  req.then( (resp) => {console.log (resp.data);})
+      .catch((err) => {console.log(`FAILED: ${err.message}`)} );
+}
+
+function clientGetByAuthor(autname) {
+  if (!autname) return;
+
+  const req = axios.get(`http://localhost:5000/author/${autname}`);
+  req.then( (resp) => {console.log (resp.data);} )
+      .catch((err) => {console.log(`FAILED: ${err.message}`)} );
+}
+
+function clientGetByTitle(title) {
+  if (!title) return;
+
+  const req = axios.get(`http://localhost:5000/title/${title}`);
+  req.then( (resp) => {console.log (resp.data);} )
+      .catch((err) => {console.log(`FAILED: ${err.message}`)} );
+}
+
+
 
 public_users.post("/register", (req,res) => {
   const uname = req.body.username;
